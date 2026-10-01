@@ -1,0 +1,49 @@
+:root{
+  --rojo:#D90429; --rojo-osc:#A30320; --negro:#000; --carbon:#1B1B1B;
+  --blanco:#fff; --hielo:#F4F4F4; --borde:#DADADA;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Manrope',sans-serif;background:var(--hielo);color:var(--carbon)}
+.top{background:var(--negro);color:var(--blanco);padding:1.4rem 2rem;display:flex;align-items:baseline;gap:1.2rem;flex-wrap:wrap}
+.logo{font:700 2.3rem/1 'Syncopate','Manrope',sans-serif;letter-spacing:.04em;margin:0 .4rem 0 0;color:var(--blanco);
+  display:inline-block;position:relative;padding-bottom:.55rem;transform:skewX(-10deg)}
+.logo::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:5px;transform-origin:left;
+  background:repeating-linear-gradient(90deg,var(--rojo) 0 10px,transparent 10px 14px);animation:trazo .9s ease-out both}
+@keyframes trazo{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.logo::after{animation:none}}
+.tag{margin:0;font-size:1.05rem;color:#ccc}
+/* Banda con dibujo de banda de rodamiento: el detalle memorable */
+.tread{height:18px;background:
+  repeating-linear-gradient(115deg,var(--rojo) 0 14px,var(--negro) 14px 18px,var(--rojo) 18px 32px,var(--negro) 32px 34px)}
+main{max-width:1050px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.bar{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.bar input{flex:1 1 260px}
+input,select{font:inherit;padding:.65rem .8rem;border:2px solid var(--borde);background:var(--blanco);border-radius:4px;width:100%}
+.bar select{width:auto}
+input:focus,select:focus,.btn:focus-visible{outline:3px solid var(--rojo);outline-offset:1px;border-color:var(--rojo)}
+.btn{font:600 1rem 'Manrope',sans-serif;padding:.65rem 1.2rem;border:2px solid var(--negro);background:var(--blanco);color:var(--negro);border-radius:4px;cursor:pointer}
+.btn:hover{background:var(--negro);color:var(--blanco)}
+.btn.primary{background:var(--rojo);border-color:var(--rojo);color:var(--blanco)}
+.btn.primary:hover{background:var(--rojo-osc);border-color:var(--rojo-osc)}
+.btn.peligro{border-color:var(--rojo);color:var(--rojo)}
+.btn.peligro:hover{background:var(--rojo);color:var(--blanco)}
+.btn.chico{padding:.35rem .75rem;font-size:.9rem}
+.tabla-wrap{background:var(--blanco);border:2px solid var(--negro);border-radius:4px;overflow:auto;max-height:calc(100vh - 240px);max-height:calc(100dvh - 240px);min-height:240px}
+table{width:100%;border-collapse:collapse;min-width:680px}
+th{position:sticky;top:0;z-index:1;background:var(--negro);color:var(--blanco);text-align:left;padding:.8rem 1rem;font:800 .9rem 'Manrope',sans-serif}
+td{padding:.75rem 1rem;border-bottom:1px solid var(--borde)}
+tbody tr:hover{background:#FFF1F3}
+.num{text-align:right}
+td:last-child{white-space:nowrap;text-align:right}
+.pocos{color:var(--rojo);font-weight:700}
+.vacio{padding:2rem;text-align:center;margin:0}
+dialog{border:3px solid var(--negro);border-top:10px solid var(--rojo);border-radius:4px;padding:1.5rem;width:min(460px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h2{margin:0 0 1rem;font:800 1.5rem 'Manrope',sans-serif;letter-spacing:-.02em}
+label{display:block;font-weight:600;margin-bottom:.8rem}
+label input,label select{margin-top:.25rem;font-weight:400}
+.tres{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.acciones{display:flex;justify-content:flex-end;gap:.6rem;margin-top:.5rem}
+.error{color:var(--rojo);font-weight:600;margin:0 0 .5rem}
+@media (max-width:600px){.top{padding:1rem}.logo{font-size:1.7rem}}

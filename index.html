@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xbri · Neumáticos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1 class="logo">XBRI</h1>
+    <p class="tag">Inventario de neumáticos</p>
+  </header>
+  <div class="tread" aria-hidden="true"></div>
+
+  <main>
+    <section class="bar">
+      <input id="q" type="search" placeholder="Buscar por medida (ej: 205/55 R16)" aria-label="Buscar">
+      <select id="filtro" aria-label="Filtrar por tipo">
+        <option value="">Todos los tipos</option>
+        <option>Auto</option><option>Camioneta</option><option>Moto</option><option>Camión</option>
+      </select>
+      <button id="nuevo" class="btn primary">Agregar neumático</button>
+    </section>
+
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th class="num">Ancho</th><th class="num">Altura</th><th class="num">Aro</th><th>Tipo</th><th class="num">Precio</th><th class="num">Stock</th><th></th></tr></thead>
+        <tbody id="filas"></tbody>
+      </table>
+      <p id="vacio" class="vacio" hidden>No hay neumáticos para mostrar. Agregá el primero con el botón rojo.</p>
+    </div>
+  </main>
+
+  <dialog id="modal">
+    <form id="form" method="dialog">
+      <h2 id="titulo">Agregar neumático</h2>
+      <input type="hidden" name="id">
+      <div class="tres">
+        <label>Ancho (mm) <input name="ancho" type="number" min="1" step="1" placeholder="205" required></label>
+        <label>Altura (%) <input name="altura" type="number" min="1" step="1" placeholder="55" required></label>
+        <label>Aro (pulg.) <input name="aro" type="number" min="1" step="0.5" placeholder="16" required></label>
+      </div>
+      <label>Tipo
+        <select name="tipo" required><option>Auto</option><option>Camioneta</option><option>Moto</option><option>Camión</option></select>
+      </label>
+      <div class="dos">
+        <label>Precio (Gs.) <input name="precio" type="number" min="0" step="1" required></label>
+        <label>Stock <input name="stock" type="number" min="0" step="1" required></label>
+      </div>
+      <p id="error" class="error" hidden></p>
+      <div class="acciones">
+        <button type="button" id="cancelar" class="btn">Cancelar</button>
+        <button type="submit" class="btn primary">Guardar cambios</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
