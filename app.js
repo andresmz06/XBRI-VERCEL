@@ -4,7 +4,29 @@ const gs = n => new Intl.NumberFormat('es-PY').format(n) + ' Gs.';
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nuevoId = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()));
 
-/* ejemplos */
+/* ---------- Alertas ---------- */
+const etiqueta = n => `${n.ancho}/${n.altura} R${n.aro}`;
+const dlg = $('#confirmar');
+function confirmar(n) {
+  $('#confirmar-texto').innerHTML = `Vas a eliminar el <strong>${esc(etiqueta(n))}</strong> (${esc(n.tipo)}). Esta acción no se puede deshacer.`;
+  dlg.returnValue = '';
+  dlg.showModal();
+  return new Promise(res => dlg.addEventListener('close', () => res(dlg.returnValue === 'si'), { once: true }));
+}
+$('#conf-no').onclick = () => dlg.close('no');
+$('#conf-si').onclick = () => dlg.close('si');
+function toast(tipo, titulo, texto) {
+  const iconos = { ok: '✓', edit: '✎', del: '✕' };
+  const t = document.createElement('div');
+  t.className = 'toast ' + tipo; t.setAttribute('role', 'status');
+  t.innerHTML = `<span class="ico">${iconos[tipo]}</span><div><strong>${esc(titulo)}</strong><p>${esc(texto)}</p></div>`;
+  const quitar = () => { t.classList.add('sale'); setTimeout(() => t.remove(), 320); };
+  t.onclick = quitar;
+  $('#toasts').append(t);
+  setTimeout(quitar, 3800);
+}
+
+/* ---------- Almacenamiento en localStorage ---------- */
 const KEY = 'xbri_neumaticos';
 const EJEMPLOS = [
   { ancho: 205, altura: 55, aro: 16, tipo: 'Auto', precio: 520000, stock: 12 },
@@ -37,7 +59,7 @@ function validar(b) {
   return d;
 }
 
-
+/* ---------- Pantalla ---------- */
 function cargar() {
   const t = $('#q').value.trim().toLowerCase(), tipo = $('#filtro').value;
   const lista = leer().filter(n =>
@@ -57,7 +79,7 @@ function cargar() {
 }
 
 function abrir(n) {
-  form.reset(); errorEl.hidden = true;
+  form.reset(); form.elements.id.value = ''; errorEl.hidden = true;
   $('#titulo').textContent = n ? 'Editar neumático' : 'Agregar neumático';
   if (n) for (const k of ['id','ancho','altura','aro','tipo','precio','stock']) form.elements[k].value = n[k];
   modal.showModal();
@@ -68,12 +90,16 @@ $('#cancelar').onclick = () => modal.close();
 $('#q').oninput = cargar;
 $('#filtro').onchange = cargar;
 
-filas.onclick = e => {
+filas.onclick = async e => {
   const ed = e.target.dataset.editar, bo = e.target.dataset.borrar;
   if (ed) abrir(leer().find(n => n.id === ed));
-  if (bo && confirm('¿Eliminar este neumático? Esta acción no se puede deshacer.')) {
-    guardar(leer().filter(n => n.id !== bo));
-    cargar();
+  if (bo) {
+    const n = leer().find(x => x.id === bo);
+    if (n && await confirmar(n)) {
+      guardar(leer().filter(x => x.id !== bo));
+      cargar();
+      toast('del', 'Neumático eliminado', `El ${etiqueta(n)} salió del inventario.`);
+    }
   }
 };
 
@@ -86,6 +112,8 @@ form.onsubmit = e => {
     else lista.push({ id: nuevoId(), ...d });
     guardar(lista);
     modal.close(); cargar();
+    datos.id ? toast('edit', 'Cambios guardados', `El ${etiqueta(d)} se actualizó correctamente.`)
+             : toast('ok', 'Neumático agregado', `El ${etiqueta(d)} ya está en el inventario.`);
   } catch (err) { errorEl.textContent = err.message; errorEl.hidden = false; }
 };
 

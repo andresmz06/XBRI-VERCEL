@@ -47,3 +47,30 @@ label input,label select{margin-top:.25rem;font-weight:400}
 .acciones{display:flex;justify-content:flex-end;gap:.6rem;margin-top:.5rem}
 .error{color:var(--rojo);font-weight:600;margin:0 0 .5rem}
 @media (max-width:600px){.top{padding:1rem}.logo{font-size:1.7rem}}
+
+/* ---------- Alertas ---------- */
+.alerta{text-align:center;width:min(400px,92vw)}
+.alerta h2{margin-bottom:.5rem}
+.alerta p{margin:0 0 1.2rem;line-height:1.5}
+.alerta .acciones{justify-content:center}
+.alerta-icono{width:64px;height:64px;margin:0 auto .9rem;border-radius:50%;background:var(--rojo);color:var(--blanco);
+  display:grid;place-items:center;font:800 2rem 'Manrope',sans-serif;box-shadow:0 0 0 8px #FFE3E7}
+.alerta[open]{animation:aparece .25s ease-out}
+.alerta[open] .alerta-icono{animation:pop .5s cubic-bezier(.2,.9,.3,1.4)}
+#toasts{position:fixed;right:1rem;bottom:1rem;display:flex;flex-direction:column;gap:.6rem;z-index:50;width:min(360px,calc(100vw - 2rem))}
+.toast{position:relative;overflow:hidden;display:flex;gap:.8rem;align-items:flex-start;cursor:pointer;
+  background:var(--negro);color:var(--blanco);padding:.9rem 1rem;border-left:6px solid var(--blanco);border-radius:4px;
+  box-shadow:0 10px 28px rgba(0,0,0,.4);animation:entra .4s cubic-bezier(.2,.9,.3,1.2) both}
+.toast p{margin:.15rem 0 0;font-size:.92rem;color:#ddd}
+.toast .ico{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--blanco);color:var(--negro)}
+.toast.del{border-left-color:var(--rojo)}
+.toast.del .ico,.toast.edit .ico{background:var(--rojo);color:var(--blanco)}
+.toast.ok .ico{background:var(--blanco);color:var(--rojo)}
+.toast::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--rojo);transform-origin:left;animation:barra 3.8s linear forwards}
+.toast.sale{animation:sale .3s ease-in forwards}
+@keyframes entra{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:none}}
+@keyframes sale{to{opacity:0;transform:translateX(60px)}}
+@keyframes barra{to{transform:scaleX(0)}}
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes aparece{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.toast,.toast::after,.alerta[open],.alerta[open] .alerta-icono{animation:none}}

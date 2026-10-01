@@ -59,6 +59,17 @@
     </form>
   </dialog>
 
+  <dialog id="confirmar" class="alerta">
+    <div class="alerta-icono" aria-hidden="true">!</div>
+    <h2>¿Eliminar neumático?</h2>
+    <p id="confirmar-texto"></p>
+    <div class="acciones">
+      <button type="button" id="conf-no" class="btn">Cancelar</button>
+      <button type="button" id="conf-si" class="btn primary">Sí, eliminar</button>
+    </div>
+  </dialog>
+  <div id="toasts" aria-live="polite"></div>
+
   <script src="app.js"></script>
 </body>
 </html>
