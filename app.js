@@ -4,7 +4,7 @@ const gs = n => new Intl.NumberFormat('es-PY').format(n) + ' Gs.';
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nuevoId = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()));
 
-/* ---------- Almacenamiento en localStorage ---------- */
+/* ejemplos */
 const KEY = 'xbri_neumaticos';
 const EJEMPLOS = [
   { ancho: 205, altura: 55, aro: 16, tipo: 'Auto', precio: 520000, stock: 12 },
@@ -37,7 +37,7 @@ function validar(b) {
   return d;
 }
 
-/* ---------- Pantalla ---------- */
+
 function cargar() {
   const t = $('#q').value.trim().toLowerCase(), tipo = $('#filtro').value;
   const lista = leer().filter(n =>
